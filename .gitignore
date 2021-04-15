@@ -1,7 +1,7 @@
 .ftpconfig
 .ftpignore
-.migrates\*
 .pacmec\.prv\settings.php
+.migrates\*
 .pacmec\themes\*
 .pacmec\plugins\*
 !.pacmec\plugins\hello.php
