@@ -26,7 +26,7 @@ require_once PACMEC_PATH . '.prv/autoClass.php';  // Deteccion auto de clases
 require_once PACMEC_PATH . '.prv/sm.php';  // Deteccion auto de clases
 
 
-echo "OK sync auto";
+echo "OK";
 # pacmec_init_header();
 # pacmec_init_vars();
 # pacmec_init_session();
