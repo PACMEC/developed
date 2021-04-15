@@ -8,4 +8,3 @@
 uploads\*
 
 cache_user_sessions\*
-echo "# developed" >> README.md
