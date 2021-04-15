@@ -1,0 +1,11 @@
+.ftpconfig
+.ftpignore
+.migrates\
+.pacmec\.prv\settings.php
+.pacmec\themes\*
+.pacmec\plugins\*
+!.pacmec\plugins\hello.php
+uploads\*
+
+cache_user_sessions\*
+echo "# developed" >> README.md
