@@ -7,14 +7,6 @@
 /** Define PACMEC_PATH as this file's directory */
 if (!defined('SITE_PATH')) define('SITE_PATH', dirname(PACMEC_PATH) . '/');
 if (!defined('PACMEC_PATH')) define('PACMEC_PATH', __DIR__ . '/');
-/**
-*
-* DISPLAY ERRORS ENABLED
-*
-**/
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 // DATABASE CONFIG
 define('DB_port', '3306');               // Base de datos: Puerto de conexion (Def: 3306)
