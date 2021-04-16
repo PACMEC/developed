@@ -27,9 +27,9 @@ class Run
     Self::pacmec_create_globals_vars();
     Self::pacmec_init_setup();
     Self::pacmec_init_options();
+    Self::pacmec_init_files_includes();
     Self::pacmec_run_session();
     Self::pacmec_init_session();
-    Self::pacmec_init_files_includes();
     Self::pacmec_init_plugins_actives();
     Self::pacmec_init_themes();
     Self::pacmec_init_route();
