@@ -11,9 +11,6 @@
  * (email : feliphegomez@gmail.com)
  * GPLv2 Full license details in license.txt
  */
-
-# echo "plugin: Hello incluido";
-
 function pacmec_Hello_PACMEC_activation()
 {
  try {
@@ -23,7 +20,7 @@ function pacmec_Hello_PACMEC_activation()
        throw new \Exception("Falta la tbl: {$tbl}", 1);
      }
    }
-   echo "plugin: Hello activado";
+   // echo "plugin: Hello activado";
  } catch (\Exception $e) {
    echo $e->getMessage();
    exit;

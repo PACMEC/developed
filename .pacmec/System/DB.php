@@ -214,6 +214,21 @@ Class DB {
     return false;
   }
 
+  public function getTableBy(String $tbl_gbl, $by)
+  {
+    if(isset($this->tables[$tbl_gbl]) && isset($this->tables[$tbl_gbl]->{$by})) return $this->tables[$tbl_gbl]->{$by};
+    return false;
+  }
+
+  public function getTotalRows() : Array
+  {
+    $r = [];
+    foreach ($this->tables as $tbl => $data) {
+      $r[$tbl] = $data->rows;
+    }
+    return $r;
+  }
+
 	public function getAdapter()
   {
 		return $this->adapter;

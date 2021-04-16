@@ -28,17 +28,10 @@ class Route extends \PACMEC\System\ModeloBase
 
 	public function __construct($args=[])
   {
-    /*
 		$args = (array) $args;
 		parent::__construct("routes", false);
-		if(isset($args['id'])){ $this->getBy('id', $args['id']); }
-		else if(isset($args['page_name'])){ $this->getBy('page_name', $args['page_name']); }
-		else if(isset($args['page_slug'])){
-			$args['page_slug'] = SELF::decodeURIautoT($args['page_slug']);
-			$this->getBy('request_uri', $args['page_slug']);
-		}
-		else if(isset($args['request_uri'])){ $this->getBy('request_uri', $args['request_uri']); }
-    */
+		if(isset($args['id'])){ $this->getPublicBy('id', $args['id']); }
+		else if(isset($args['request_uri'])){ $this->getPublicBy('request_uri', $args['request_uri']); }
 	}
 
 	public static function encodeURIautoT(string $page_slug) : string
@@ -68,20 +61,40 @@ class Route extends \PACMEC\System\ModeloBase
 		return implode('/', $url_explode);
 	}
 
-	public static function allLoad() : array
+	public static function allLoad() : Array
   {
 		$r = [];
 		if(!isset($GLOBALS['PACMEC']['DB'])){ return $r; }
-		foreach($GLOBALS['PACMEC']['DB']->FetchAllObject("SELECT * FROM {$GLOBALS['PACMEC']['DB']->getPrefix()}routes ", []) as $menu){
+		foreach($GLOBALS['PACMEC']['DB']->FetchAllObject("SELECT * FROM {$this->getTable()}", []) as $menu){
 			$r[] = new Self($menu);
 		}
 		return $r;
 	}
 
-	public function getBy($column='id', $val="")
+	public function getBy($a,$b)
+	{
+		return $this->getPublicBy($a,$b);
+	}
+
+	public function getById($a)
+	{
+		return $this->getPublicBy('id',$a);
+	}
+
+	public function getPublicBy($column='id', $val="")
   {
 		try {
-			$this->setAll($GLOBALS['PACMEC']['DB']->FetchObject("SELECT * FROM {$this->getTable()} WHERE `{$column}`=?", [$val]));
+			global $PACMEC;
+			$this->setAll(Self::FetchObject(
+				"SELECT * FROM {$this->getTable()}
+					WHERE `{$column}`=?
+					AND `host` IN ('*', ?)
+					"
+				, [
+					$val,
+					$PACMEC['host']
+				]
+			));
 			return $this;
 		}
 		catch(\Exception $e){
@@ -98,24 +111,15 @@ class Route extends \PACMEC\System\ModeloBase
 					case null:
 						break;
 					default:
-						// $permissions = \userinfo('permissions_items');
-						// echo json_encode($permissions);
-
 						$check = \validate_permission($arg['permission_access']);
 						if($check == false){
-							if(\isGuest()){
-								$arg['component'] = 'pages-signin';
-							} else {
-								$arg['component'] = 'pages-error';
-							}
-
-							$arg['theme'] = 'system';
-							$arg['content'] = 'no_access';
+							//if(\isGuest()){ $arg['layout'] = 'pages-signin'; } else { $arg['layout'] = 'pages-error'; }
+							$arg['layout'] = 'pages-error';
+							$arg['content'] = "[pacmec-errors title=\"route_no_access_title\" content=\"route_no_access_content\"][/pacmec-errors]";
 						}
 						break;
 				}
 				foreach($arg as $k=>$v){
-					# if($k=="content") $v = do_shortcode($v);
 					switch ($k) {
 						case 'page_slug':
 							$this->{$k} = SELF::encodeURIautoT($v);
@@ -125,9 +129,19 @@ class Route extends \PACMEC\System\ModeloBase
 							break;
 					}
 				}
-				$this->getMeta();
-				$this->getComponents();
+				if($this->is_actived == 0){
+					$this->layout = 'pages-error';
+					$this->content = "[pacmec-errors title=\"route_no_actived_title\" content=\"route_no_actived_content\"][/pacmec-errors]";
+				}
+				//$this->getMeta();
 			}
+		}
+		if(is_null($this->theme)) $this->theme = \infosite('theme_default');
+		if(\validate_theme($this->theme)==false) $this->theme = \infosite('theme_default');
+		$acti = \activation_theme($this->theme);
+		if($this->id <= 0){
+			$this->layout = 'pages-error';
+			$this->content = "[pacmec-errors title=\"error_404_title\" content=\"error_404_content\"][/pacmec-errors]";
 		}
 	}
 
@@ -135,26 +149,6 @@ class Route extends \PACMEC\System\ModeloBase
 	{
 		return $this->id > 0 ? true : false;
 	}
-
-  public function getComponents()
-  {
-    try {
-      if($this->id>0){
-        $result = $GLOBALS['PACMEC']['DB']->FetchAllObject("SELECT * FROM `{$this->getTable()}_components` WHERE `route_id`=? ORDER BY `ordering` ASC", [$this->id]);
-        if(is_array($result)) {
-          $this->components = [];
-          foreach ($result as $component) {
-            $component->data = json_decode($component->data);
-            $this->components[] = $component;
-          }
-        }
-        return [];
-      }
-    }
-    catch(\Exception $e){
-      return [];
-    }
-  }
 
   public function getMeta()
   {

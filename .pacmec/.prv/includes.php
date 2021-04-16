@@ -15,7 +15,10 @@ class Autoload
   {
     if(!isset($GLOBALS['PACMEC'])) {
       global $PACMEC;
-        $PACMEC['autoload'] = [];
+        $PACMEC['autoload'] = [
+          "classes"     => [],
+          "dictionary"     => [],
+        ];
         $PACMEC['hooks'] = null;
         $PACMEC['DB'] = null;
         $PACMEC['ip'] = null;
@@ -32,6 +35,7 @@ class Autoload
         ];
         $PACMEC['session'] = null;
         $PACMEC['theme'] = [];
+        $PACMEC['themes'] = [];
         $PACMEC['plugins'] = [];
         $PACMEC['options'] = [];
         $PACMEC['alerts'] = [];
@@ -59,10 +63,24 @@ class Autoload
               if (!\class_exists($pClassName)) {
                 throw new \Exception("Class no encontrada. {$file}... {$namespace}::{$nameclass}");
               } else {
-                $PACMEC['autoload'][$pClassName] = $file;
+                $PACMEC['autoload']['classes'][$pClassName] = $file;
               }
             } else {
-              throw new \Exception("Archivo no encontrado. {$file}... {$namespace} :: {$nameclass}");
+              $archivo1 = PACMEC_PATH."/{$nameclass}.php";
+              $file = PACMEC_PATH."/libs/{$nameclass}.php";
+
+              if(\is_file($file) && \file_exists($file)){
+                require_once($file);
+                if (!\class_exists($pClassName)) {
+                  throw new \Exception("Class no encontrada. {$file}... {$namespace}::{$nameclass}");
+                } else {
+                  $PACMEC['autoload']['classes'][$pClassName] = $file;
+                }
+              } else {
+                $archivo1 = PACMEC_PATH."/{$nameclass}.php";
+                $archivo2 = PACMEC_PATH."/libs/{$nameclass}.php";
+                throw new \Exception("Archivo no encontrado. {$archivo2}... {$namespace} :: {$nameclass}");
+              }
             }
             break;
           default:
@@ -73,7 +91,7 @@ class Autoload
     } catch (\Exception $e) {
       echo "pClassName: {$pClassName} - namespace: {$namespace} - nameclass: {$nameclass}\n";
       echo ("PACMEC-ERROR: Autoload::autoload() - {$e->getMessage()}\n");
-      echo json_encode($e->getTrace(), JSON_PRETTY_PRINT);
+      echo json_encode($e->getTrace(), JSON_PRETTY_PRINT)."\n";
       exit();
     }
   }

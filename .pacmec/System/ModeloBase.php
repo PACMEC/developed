@@ -24,7 +24,7 @@ class ModeloBase {
 			if(!isset($GLOBALS['PACMEC']['DB'])){ throw new \Exception("Conexion DB no encontrada"); }
 			$this->db = $GLOBALS['PACMEC']['DB'];
 			$this->prefix = $GLOBALS['PACMEC']['DB']->getPrefix();
-			$this->table = $this->prefix.$table;
+			$this->table = $GLOBALS['PACMEC']['DB']->getTableName($table);
 			if($load_columns == true){
 				$this->loadColumns();
 			}
