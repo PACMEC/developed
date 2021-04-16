@@ -11,7 +11,7 @@
  * @version    1.0.1
  */
 
-namespace PACMEC;
+namespace PACMEC\System;
 
 class ControladorBase {
 	private $conectar;

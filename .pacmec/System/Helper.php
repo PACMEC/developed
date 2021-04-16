@@ -11,9 +11,9 @@
  * @version    1.0.1
  */
 
-namespace PACMEC;
+namespace PACMEC\System;
 
-class AyudaVistas
+class Helper
 {
   public function url($controlador=CONTROLADOR_DEFECTO, $accion=ACCION_DEFECTO)
   {
