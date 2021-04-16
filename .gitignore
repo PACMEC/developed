@@ -4,6 +4,5 @@
 .migrates\*
 .pacmec\themes\*
 .pacmec\plugins\*
-!.pacmec\plugins\hello.php
 uploads\*
 cache_user_sessions\*
