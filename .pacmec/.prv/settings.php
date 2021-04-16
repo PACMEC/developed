@@ -30,5 +30,5 @@ define('PACMEC_HOST', 'localhost');       // PACMEC Config: Host Actual (Para ev
 define('PACMEC_SSL', true);               // Habilitar SSL Forzado
 
 
-define('PACMEC_DEF_SEPARATOR_PATH', '\\');
+define('PACMEC_DEF_SEPARATOR_PATH', '/');
 define('PACMEC_LANG_DEF', 'es-CO');

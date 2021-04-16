@@ -300,7 +300,7 @@ class Run
       $PACMEC['total_records'] = $PACMEC['DB']->getTotalRows();
       //$PACMEC['route'] = new \PACMEC\System\Route();
     } else {
-      throw new \Exception("Servidor no autorizado. ", 1);
+      exit("Servidor no autorizado. ");
     }
   }
 

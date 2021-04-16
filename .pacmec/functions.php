@@ -291,22 +291,9 @@ function pacmec_head()
   foreach($GLOBALS['PACMEC']['website']['styles']['head'] as $file){ $a .= \PHPStrap\Util\Html::tag($file['tag'], "", [], $file['attrs'], true)."\t"; }
   $a .= \PHPStrap\Util\Html::tag('style', do_action( "head-styles" ), [], ["rel"=>"stylesheet", "type"=>"text/css", "charset"=>"UTF-8"], false) . "\t";
   foreach($GLOBALS['PACMEC']['website']['scripts']['head'] as $file){ $a .= \PHPStrap\Util\Html::tag($file['tag'], "", [], $file['attrs'], false)."\t"; }
-  echo "<script type=\"text/javascript\">";
-  echo '
-    var WCO = {
-			pub: "' . (infosite('wco_mode') == 'production' ? infosite('wco_pub_prod') : infosite('wco_pub_test') ) .  '",
-		};
-    window.mtAsyncInit = function(){
-      PACMEC.init({
-        api_server : location.protocol + "//" + location.host,
-        appId      : "clubcampestreparaisosol",
-        token      : "pacmec",
-        Wmode      : "'.infosite('wco_mode').'",
-        Wversion   : "v1",
-      });
-    }
-  ';
-  echo "</script>";
+  echo "<script type=\"text/javascript\">\n\t\t";
+  echo '/* Scripts PACMEC */'."\n\t";
+  echo "</script>\n\t";
   echo "{$a}";
   echo "<script type=\"text/javascript\">";
   do_action( "head-scripts" );
