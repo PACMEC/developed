@@ -1,0 +1,14 @@
+/**
+ * Translation for the language: es-CO
+ * Text Domain: General
+ *
+ * Version: 0.1
+ * Author: FelipheGomez
+ * Author URI: https://github.com/FelipheGomez
+ * (email : feliphegomez@gmail.com)
+ */
+
+hello= Hola
+hello_wor= Hola mundo
+hello_wor!= Hola mundo!
+hello %s= Hola %s

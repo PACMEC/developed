@@ -10,7 +10,7 @@ define('DB_driver', 'mysql');                                // Base de datos: C
 define('DB_host', 'localhost');                              // Base de datos: Servidor/Host de conexion (Def: localhost)
 define('DB_user', 'pacmec_u');                               // Base de datos: Usuario de conexion
 define('DB_pass', 'pacmec_p');                               // Base de datos: Contraseña del usuario
-define('DB_database', 'pacmec_dev');                         // Base de datos: Nombre de la base de datos
+define('DB_database', 'pacmec');                             // Base de datos: Nombre de la base de datos
 define('DB_charset', 'utf8mb4');                             // Base de datos: Caracteres def
 define('DB_prefix', 'mt_');                                  // Base de datos: Prefijo de las tablas (Opcional)
 
@@ -29,6 +29,4 @@ define("SMTP_BCC", false);                                   // SMTP   Config: C
 define('PACMEC_HOST', 'localhost');       // PACMEC Config: Host Actual (Para evitar suplentacion)
 define('PACMEC_SSL', true);               // Habilitar SSL Forzado
 
-
-define('PACMEC_DEF_SEPARATOR_PATH', '\\');
-define('PACMEC_LANG_DEF', 'es-CO');
+define('DEF_SEPARATOR_PATH', '\\');

@@ -8,30 +8,63 @@
  * @license    license.txt
  * @version    0.0.1
  */
-/**
-*
-* DISPLAY ERRORS ENABLED
-*
-**/
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-exec("git pull origin main");
 
-if (!defined('PACMEC_PATH')) define('PACMEC_PATH', __DIR__ . '/');
+if (!defined('PACMEC_PATH')) define('PACMEC_PATH', __DIR__);                   // Path PACMEC
+require_once PACMEC_PATH . '/.prv/settings.php';                                // configuraciones principales del sitio
+require_once PACMEC_PATH . '/.prv/includes.php';                                // incluir archivos
 
-require_once PACMEC_PATH . '.prv/settings.php';   // Configuración global
-require_once PACMEC_PATH . 'functions.php';       // Funciones globales
-require_once PACMEC_PATH . '.prv/autoClass.php';  // Deteccion auto de clases
-require_once PACMEC_PATH . '.prv/sm.php';  // Deteccion auto de clases
+$pacmec = \PACMEC\System\Run::exec();
+
+echo json_encode($GLOBALS['PACMEC'], JSON_PRETTY_PRINT);
 
 
-echo "OK";
-# pacmec_init_header();
-# pacmec_init_vars();
-# pacmec_init_session();
-# pacmec_init_options();
-# pacmec_init_system();
+
+  // $PACMEC = \PACMEC\Exec();
+  /*
+  if(MODE_DEBUG == true)
+  {
+    "-FINISH-";
+  }
+
+  require_once PACMEC_PATH . '.prv/sm.php';                                      // Solvemedia def*/
+
+  /*
+	foreach(\glob(PACMEC_PATH."includes/init/*.php") as $file){
+		require_once $file;
+		$classNameFile = \basename($file);
+		$className = \str_replace([".php"],'', $classNameFile);
+		if(
+      !\class_exists('PACMEC\\'.$className) && !\interface_exists('PACMEC\\'.$className)
+    ){
+			throw new \Exception("Clase no encontrada {$className}", 1);
+		}
+	}
+	foreach(\glob(PACMEC_PATH."includes/models/*.php") as $file){
+		require_once $file;
+		$classNameFile = \basename($file);
+		$className = \str_replace([".php"],'', $classNameFile);
+		if(
+       !\class_exists('PACMEC\\'.$className) && !\interface_exists('PACMEC\\'.$className)
+    ){
+      throw new \Exception("Clase no encontrada {$className}", 1);
+		}
+	}
+  if(!\pacmec_init_vars()){ throw new \Exception("pacmec_init_vars_fail", 1); }
+  if(!\pacmec_init_system()){ throw new \Exception("pacmec_init_system_fail", 1); }
+  if(!\pacmec_init_options()){ throw new \Exception("pacmec_init_options_fail", 1); }
+  $GLOBALS['PACMEC']['session'] = \pacmec_init_session();
+    if(MODE_DEBUG == true)
+    {
+      echo ("-- END --"."\n");
+      echo \json_encode($GLOBALS['PACMEC'], JSON_PRETTY_PRINT);
+    }
+  */
+
+# ();
 # pacmec_init_setup();
 # pacmec_init_plugins_actives();
 # pacmec_init_route();
