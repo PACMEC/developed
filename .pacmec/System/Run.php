@@ -17,12 +17,6 @@ class Run
 {
   public function __construct()
   {
-    // Crear conexion
-    // Validar tablas principales
-    // Tablas completas?
-    // Que falta?
-    //
-    # echo "PACMEC\Systemx\Run::__construct()\n";
     require_once PACMEC_PATH . '/functions.php';
     Self::pacmec_create_globals_vars();
     Self::pacmec_init_setup();
